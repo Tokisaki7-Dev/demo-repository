@@ -3,298 +3,428 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OtakuVerse • Plataforma de Conteúdo +18 (modelo)</title>
+    <title>Low Promo Games • Promoções de Games e Gift Cards</title>
     <style>
       :root {
-        --bg: #0f1220;
-        --panel: #1a1f35;
-        --panel-2: #232a46;
-        --text: #eef2ff;
-        --muted: #b9c0dd;
-        --accent: #7c5cff;
-        --accent-2: #40d3ff;
-        --danger: #ff5b7a;
+        --bg: #07090f;
+        --panel: #0f1424;
+        --panel-2: #171f36;
+        --text: #f3f6ff;
+        --muted: #a0accc;
+        --brand: #6d5efc;
+        --brand-2: #00d4ff;
+        --success: #00d98f;
+        --danger: #ff5b7d;
+        --line: #2c365b;
       }
 
       * { box-sizing: border-box; }
+
       body {
         margin: 0;
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
-        background: radial-gradient(circle at top right, #2b2f57 0%, var(--bg) 45%);
+        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        background:
+          radial-gradient(circle at 15% -10%, #2b1f62 0%, transparent 35%),
+          radial-gradient(circle at 90% 0%, #073f55 0%, transparent 25%),
+          var(--bg);
         color: var(--text);
       }
 
-      a { color: var(--accent-2); text-decoration: none; }
-      a:hover { text-decoration: underline; }
+      a { color: inherit; text-decoration: none; }
+      .container { width: min(1200px, 92vw); margin: 0 auto; }
 
-      .container { width: min(1100px, 92vw); margin: 0 auto; }
-      .hidden { display: none !important; }
-
-      .age-gate {
-        position: fixed;
-        inset: 0;
-        background: rgba(8, 10, 18, 0.92);
-        display: grid;
-        place-items: center;
-        z-index: 999;
-        padding: 1rem;
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: .35rem;
+        border: 1px solid #3a4980;
+        border-radius: 999px;
+        padding: .28rem .75rem;
+        font-size: .8rem;
+        color: #d8e1ff;
       }
 
-      .age-card {
-        max-width: 560px;
-        width: 100%;
-        background: linear-gradient(180deg, var(--panel), #141a31);
-        border: 1px solid #3e497a;
-        border-radius: 16px;
-        padding: 1.2rem;
-        box-shadow: 0 20px 40px rgba(0,0,0,.45);
-      }
-
-      .age-card h2 { margin-top: 0; }
-      .small { color: var(--muted); font-size: .92rem; line-height: 1.5; }
-      .actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
-
-      button, .btn {
-        background: var(--accent);
+      .btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: .45rem;
+        background: linear-gradient(135deg, var(--brand), var(--brand-2));
+        border: 0;
         color: white;
-        border: none;
-        border-radius: 10px;
-        padding: .65rem 1rem;
-        font-weight: 600;
+        padding: .78rem 1.1rem;
+        border-radius: 11px;
+        font-weight: 700;
         cursor: pointer;
       }
 
-      button.secondary, .btn.secondary { background: #3a456f; }
-      button.danger { background: var(--danger); }
+      .btn.secondary {
+        background: #1e2a4f;
+        border: 1px solid #3d4a7c;
+      }
 
-      header {
-        border-bottom: 1px solid #35406c;
+      .topbar {
+        border-bottom: 1px solid var(--line);
+        background: rgba(10, 14, 25, .85);
         backdrop-filter: blur(8px);
         position: sticky;
         top: 0;
-        background: rgba(15, 18, 32, 0.84);
+        z-index: 10;
       }
 
-      nav {
+      .topbar-inner {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        padding: .9rem 0;
+        padding: .95rem 0;
       }
 
-      .logo { font-weight: 800; letter-spacing: .4px; }
-      .logo span { color: var(--accent-2); }
-      .menu { display: flex; gap: 1rem; flex-wrap: wrap; }
+      .logo {
+        font-size: 1.2rem;
+        font-weight: 900;
+        letter-spacing: .5px;
+      }
+
+      .logo span { color: var(--brand-2); }
+
+      .menu {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: .9rem;
+        color: #d4ddff;
+      }
 
       .hero {
-        padding: 3rem 0 1.5rem;
+        margin-top: 1.1rem;
         display: grid;
         grid-template-columns: 1.25fr .75fr;
-        gap: 1.2rem;
+        gap: 1rem;
       }
 
       .card {
         background: linear-gradient(180deg, var(--panel), var(--panel-2));
-        border: 1px solid #3e497a;
-        border-radius: 14px;
-        padding: 1rem;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 1.1rem;
       }
 
-      .grid {
+      .hero-main h1 {
+        margin: .6rem 0;
+        font-size: clamp(1.7rem, 3vw, 2.7rem);
+        line-height: 1.15;
+      }
+
+      .small { color: var(--muted); line-height: 1.55; }
+
+      .hero-cta {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: .65rem;
+      }
+
+      .stats {
+        margin-top: 1rem;
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: .9rem;
-        margin: 1rem 0 2rem;
+        grid-template-columns: repeat(3, 1fr);
+        gap: .55rem;
       }
 
-      .item h4 { margin: .2rem 0 .3rem; }
-      .tag {
-        display: inline-block;
-        border: 1px solid #5d6999;
-        color: #dbe2ff;
-        border-radius: 999px;
-        padding: .2rem .6rem;
-        font-size: .8rem;
-        margin-right: .35rem;
+      .stat {
+        background: #121b32;
+        border: 1px solid #2f3a63;
+        border-radius: 12px;
+        padding: .7rem;
       }
 
-      .search-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+      .stat strong { font-size: 1.1rem; display: block; }
+      .hero-side .highlight { color: #9ef5d3; font-weight: 700; }
+
+      .section { margin-top: 1.05rem; }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: .8rem;
+        margin-bottom: .7rem;
+      }
+
+      .section-head h2 { margin: 0; font-size: 1.35rem; }
+
+      .filters {
+        display: grid;
+        grid-template-columns: 1.3fr .9fr .9fr;
+        gap: .7rem;
+      }
+
       input, select {
         width: 100%;
-        padding: .6rem .75rem;
-        border-radius: 10px;
-        border: 1px solid #4a5687;
-        background: #11172b;
+        background: #0d1325;
         color: var(--text);
+        border: 1px solid #384674;
+        border-radius: 11px;
+        padding: .7rem .75rem;
       }
 
-      .search-row > * { flex: 1; min-width: 180px; }
+      .products-grid {
+        margin-top: .75rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: .75rem;
+      }
+
+      .product {
+        background: linear-gradient(180deg, #131b31, #101729);
+        border: 1px solid #32406b;
+        border-radius: 14px;
+        padding: .75rem;
+      }
+
+      .badge-row { display: flex; gap: .45rem; flex-wrap: wrap; margin-bottom: .45rem; }
+      .badge {
+        font-size: .73rem;
+        font-weight: 700;
+        border-radius: 999px;
+        padding: .18rem .52rem;
+        border: 1px solid #4a5d9b;
+      }
+
+      .badge.deal { border-color: #0ecf8c; color: #83ffd2; }
+      .badge.hot { border-color: #ff6888; color: #ffbdd1; }
+
+      .product h3 { margin: .45rem 0 .3rem; font-size: 1rem; }
+      .price-row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        margin-top: .45rem;
+      }
+
+      .old-price { color: #8c98b8; text-decoration: line-through; font-size: .85rem; }
+      .new-price { color: #9ef5d3; font-size: 1.25rem; font-weight: 800; }
+
+      .bundle-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: .75rem;
+      }
+
+      .bundle h3 { margin: 0 0 .35rem; }
 
       footer {
-        border-top: 1px solid #35406c;
+        margin-top: 1.2rem;
+        border-top: 1px solid var(--line);
         color: var(--muted);
-        padding: 1rem 0 2.2rem;
+        padding: 1.05rem 0 1.9rem;
       }
 
-      @media (max-width: 840px) {
+      @media (max-width: 980px) {
         .hero { grid-template-columns: 1fr; }
+        .filters { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 780px) {
+        .stats { grid-template-columns: 1fr; }
+        .bundle-grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
-    <div id="ageGate" class="age-gate">
-      <div class="age-card">
-        <h2>Verificação de Idade (18+)</h2>
-        <p class="small">
-          Este é um modelo técnico para plataforma com controle de acesso. Não há conteúdo explícito nesta demo.
-          Ao continuar, você confirma que é maior de 18 anos e aceita os <a href="#termos">Termos</a>.
-        </p>
-        <div class="actions">
-          <button id="btnAdulto">Tenho 18 anos ou mais</button>
-          <button id="btnMenor" class="danger">Sou menor de 18</button>
-        </div>
-      </div>
-    </div>
-
-    <header>
-      <nav class="container">
-        <div class="logo">Otaku<span>Verse</span></div>
+    <header class="topbar">
+      <nav class="container topbar-inner">
+        <a href="#" class="logo">LOW <span>PROMO</span> GAMES</a>
         <div class="menu">
-          <a href="#catalogo">Catálogo</a>
-          <a href="#planos">Planos</a>
-          <a href="#termos">Termos</a>
-          <a href="#privacidade">Privacidade</a>
-          <a href="#contato">Contato</a>
+          <a href="#ofertas">Ofertas relâmpago</a>
+          <a href="#mais-vendidos">Mais vendidos</a>
+          <a href="#pacotes">Pacotes</a>
+          <button class="btn secondary">Entrar</button>
         </div>
       </nav>
     </header>
 
     <main class="container">
       <section class="hero">
-        <article class="card">
-          <h1>Template completo de site +18 (sem conteúdo explícito)</h1>
-          <p class="small">
-            Estrutura pronta com página inicial, verificação de idade, catálogo com filtros, planos, área legal e contato.
-            Ideal para evolução com backend, autenticação real e compliance.
-          </p>
-          <div class="actions">
-            <a class="btn" href="#catalogo">Explorar catálogo</a>
-            <a class="btn secondary" href="#planos">Ver planos</a>
+        <article class="card hero-main">
+          <span class="pill">⚡ Festival de Promoções • atualização a cada 2h</span>
+          <h1>Um upgrade absurdo no visual + muito mais listas de produtos em promoção.</h1>
+          <p class="small">Loja com cara profissional, foco em conversão e destaque para jogos populares de PC, console, gift cards e assinaturas digitais. Navegue por dezenas de ofertas filtrando por plataforma e faixa de preço.</p>
+          <div class="hero-cta">
+            <a class="btn" href="#ofertas">Ver promoções agora</a>
+            <a class="btn secondary" href="#mais-vendidos">Mais vendidos</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>+250</strong><span class="small">ofertas ativas</span></div>
+            <div class="stat"><strong>Até 92%</strong><span class="small">de desconto</span></div>
+            <div class="stat"><strong>4.9/5</strong><span class="small">avaliação média</span></div>
           </div>
         </article>
 
-        <aside class="card" id="planos">
-          <h3>Planos</h3>
-          <p class="small">Exemplo de monetização:</p>
-          <ul>
-            <li>Free: acesso limitado</li>
-            <li>Plus: R$ 19,90/mês</li>
-            <li>Premium: R$ 39,90/mês (download offline)</li>
-          </ul>
-          <button class="secondary">Assinar (demo)</button>
+        <aside class="card hero-side">
+          <h3>Oferta destaque da semana</h3>
+          <p class="small">Cyber Streets Ultimate Edition + Passe de Temporada.</p>
+          <p class="old-price">De R$ 349,90</p>
+          <p class="new-price">R$ 89,90</p>
+          <p class="highlight">Economia real: 74% OFF</p>
+          <button class="btn" style="width:100%;">Comprar agora</button>
         </aside>
       </section>
 
-      <section id="catalogo" class="card">
-        <h2>Catálogo</h2>
-        <div class="search-row">
-          <input id="searchInput" placeholder="Buscar por título..." />
-          <select id="genreFilter">
-            <option value="">Todos os gêneros</option>
-            <option value="Aventura">Aventura</option>
-            <option value="Romance">Romance</option>
-            <option value="Comédia">Comédia</option>
-            <option value="Fantasia">Fantasia</option>
+      <section id="ofertas" class="section card">
+        <div class="section-head">
+          <h2>Ofertas relâmpago</h2>
+          <span class="pill" id="countLabel"></span>
+        </div>
+
+        <div class="filters">
+          <input id="searchInput" type="text" placeholder="Buscar jogos, gift cards ou categorias..." />
+          <select id="platformFilter">
+            <option value="">Todas as plataformas</option>
+            <option value="PC">PC</option>
+            <option value="PlayStation">PlayStation</option>
+            <option value="Xbox">Xbox</option>
+            <option value="Nintendo">Nintendo</option>
+            <option value="Multiplataforma">Multiplataforma</option>
+          </select>
+          <select id="priceFilter">
+            <option value="">Qualquer preço</option>
+            <option value="ate-50">Até R$ 50</option>
+            <option value="ate-100">Até R$ 100</option>
+            <option value="ate-200">Até R$ 200</option>
           </select>
         </div>
-        <div id="catalogGrid" class="grid"></div>
+
+        <div id="dealsGrid" class="products-grid"></div>
       </section>
 
-      <section id="termos" class="card">
-        <h2>Termos de Uso</h2>
-        <p class="small">Template de seção legal: idade mínima, regras da comunidade, direitos autorais, política anti-pirataria e leis locais.</p>
+      <section id="mais-vendidos" class="section card">
+        <div class="section-head">
+          <h2>Mais vendidos em 24h</h2>
+          <span class="pill">🔥 Alta procura</span>
+        </div>
+        <div id="topGrid" class="products-grid"></div>
       </section>
 
-      <section id="privacidade" class="card">
-        <h2>Política de Privacidade</h2>
-        <p class="small">Template de seção legal: tratamento de dados, cookies, base legal, retenção e canal de contato para solicitações LGPD/GDPR.</p>
-      </section>
-
-      <section id="contato" class="card">
-        <h2>Contato</h2>
-        <form class="search-row">
-          <input type="text" placeholder="Seu nome" required />
-          <input type="email" placeholder="Seu e-mail" required />
-          <button type="submit">Enviar</button>
-        </form>
+      <section id="pacotes" class="section">
+        <div class="bundle-grid">
+          <article class="card bundle">
+            <h3>Pacote FPS PRO</h3>
+            <p class="small">3 títulos competitivos + 1 gift card de R$ 60 para skins.</p>
+            <p class="new-price">R$ 219,90</p>
+            <button class="btn" style="width:100%;">Quero esse pacote</button>
+          </article>
+          <article class="card bundle">
+            <h3>Pacote RPG Lendário</h3>
+            <p class="small">2 RPGs AAA + season pass + trilha sonora digital.</p>
+            <p class="new-price">R$ 269,90</p>
+            <button class="btn" style="width:100%;">Garantir desconto</button>
+          </article>
+          <article class="card bundle">
+            <h3>Pacote Família</h3>
+            <p class="small">6 jogos casuais coop para jogar no mesmo sofá.</p>
+            <p class="new-price">R$ 119,90</p>
+            <button class="btn" style="width:100%;">Adicionar ao carrinho</button>
+          </article>
+        </div>
       </section>
     </main>
 
     <footer>
-      <div class="container">
-        © 2026 OtakuVerse (demo). Estrutura para uso educacional e adaptação legal.
-      </div>
+      <div class="container">© 2026 Low Promo Games — preços promocionais sujeitos a alteração sem aviso prévio.</div>
     </footer>
 
     <script>
-      const ageGate = document.getElementById('ageGate');
-      const btnAdulto = document.getElementById('btnAdulto');
-      const btnMenor = document.getElementById('btnMenor');
-
-      const catalog = [
-        { title: 'Lendas de Asterion', genre: 'Fantasia', year: 2025 },
-        { title: 'Corredores de Neon', genre: 'Aventura', year: 2024 },
-        { title: 'Festival de Verão', genre: 'Romance', year: 2023 },
-        { title: 'Clube das Máscaras', genre: 'Comédia', year: 2022 },
-        { title: 'Nébula Escarlate', genre: 'Fantasia', year: 2026 },
+      const deals = [
+        { name: 'Night Raid V', platform: 'PC', category: 'Ação', oldPrice: 249.9, newPrice: 79.9, off: 68 },
+        { name: 'EA Sports FC 26', platform: 'PlayStation', category: 'Esporte', oldPrice: 359.9, newPrice: 239.9, off: 33 },
+        { name: 'Forza Horizon Ultimate', platform: 'Xbox', category: 'Corrida', oldPrice: 299.9, newPrice: 149.9, off: 50 },
+        { name: 'Hyrule Chronicles', platform: 'Nintendo', category: 'Aventura', oldPrice: 349.9, newPrice: 219.9, off: 37 },
+        { name: 'Battle Arena 3', platform: 'PC', category: 'Competitivo', oldPrice: 139.9, newPrice: 49.9, off: 64 },
+        { name: 'Gift Card Steam R$100', platform: 'Multiplataforma', category: 'Gift Card', oldPrice: 100, newPrice: 89.9, off: 10 },
+        { name: 'Dark Forge Deluxe', platform: 'PlayStation', category: 'RPG', oldPrice: 329.9, newPrice: 169.9, off: 48 },
+        { name: 'Pixel Ranch Story', platform: 'Nintendo', category: 'Casual', oldPrice: 79.9, newPrice: 39.9, off: 50 },
+        { name: 'Warzone Operator Pack', platform: 'Multiplataforma', category: 'DLC', oldPrice: 99.9, newPrice: 34.9, off: 65 },
+        { name: 'Galaxy Frontier 2', platform: 'PC', category: 'Estratégia', oldPrice: 199.9, newPrice: 74.9, off: 62 },
+        { name: 'Assinatura Game Plus 3 meses', platform: 'Multiplataforma', category: 'Assinatura', oldPrice: 119.9, newPrice: 79.9, off: 33 },
+        { name: 'Street Kings Remaster', platform: 'Xbox', category: 'Luta', oldPrice: 159.9, newPrice: 69.9, off: 56 },
       ];
 
-      const grid = document.getElementById('catalogGrid');
+      const topSellers = [
+        { name: 'Cyber Streets Ultimate', platform: 'PC', newPrice: 89.9, off: 74 },
+        { name: 'Mortal Clash X', platform: 'PlayStation', newPrice: 99.9, off: 67 },
+        { name: 'MineBlocks Legends', platform: 'Nintendo', newPrice: 59.9, off: 45 },
+        { name: 'F1 26 Champions', platform: 'Xbox', newPrice: 129.9, off: 58 },
+        { name: 'Gift Card PSN R$250', platform: 'PlayStation', newPrice: 229.9, off: 8 },
+        { name: 'Dragon Empire Online', platform: 'PC', newPrice: 69.9, off: 61 },
+      ];
+
+      const dealsGrid = document.getElementById('dealsGrid');
+      const topGrid = document.getElementById('topGrid');
       const searchInput = document.getElementById('searchInput');
-      const genreFilter = document.getElementById('genreFilter');
+      const platformFilter = document.getElementById('platformFilter');
+      const priceFilter = document.getElementById('priceFilter');
+      const countLabel = document.getElementById('countLabel');
 
-      function renderCatalog() {
+      function formatBRL(value) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+      }
+
+      function buildCard(item, hot = false) {
+        return `
+          <article class="product">
+            <div class="badge-row">
+              <span class="badge deal">-${item.off}%</span>
+              <span class="badge ${hot ? 'hot' : ''}">${item.platform}</span>
+            </div>
+            <h3>${item.name}</h3>
+            <p class="small">${item.category || 'Oferta especial de tempo limitado.'}</p>
+            <div class="price-row">
+              <div>
+                <div class="old-price">${item.oldPrice ? `De ${formatBRL(item.oldPrice)}` : 'Preço promocional'}</div>
+                <div class="new-price">${formatBRL(item.newPrice)}</div>
+              </div>
+              <button class="btn">Comprar</button>
+            </div>
+          </article>
+        `;
+      }
+
+      function filterDeals() {
         const term = searchInput.value.toLowerCase().trim();
-        const genre = genreFilter.value;
+        const platform = platformFilter.value;
+        const price = priceFilter.value;
 
-        const filtered = catalog.filter((item) => {
-          const byTitle = item.title.toLowerCase().includes(term);
-          const byGenre = genre ? item.genre === genre : true;
-          return byTitle && byGenre;
+        const filtered = deals.filter((item) => {
+          const byTerm = item.name.toLowerCase().includes(term) || item.category.toLowerCase().includes(term);
+          const byPlatform = platform ? item.platform === platform : true;
+          const byPrice =
+            !price ||
+            (price === 'ate-50' && item.newPrice <= 50) ||
+            (price === 'ate-100' && item.newPrice <= 100) ||
+            (price === 'ate-200' && item.newPrice <= 200);
+
+          return byTerm && byPlatform && byPrice;
         });
 
-        grid.innerHTML = filtered.map((item) => `
-          <article class="card item">
-            <span class="tag">${item.genre}</span>
-            <span class="tag">${item.year}</span>
-            <h4>${item.title}</h4>
-            <p class="small">Descrição genérica de item para demonstração de catálogo.</p>
-          </article>
-        `).join('');
+        dealsGrid.innerHTML = filtered.map((item) => buildCard(item)).join('');
+        countLabel.textContent = `${filtered.length} promoções encontradas`;
 
         if (!filtered.length) {
-          grid.innerHTML = '<p class="small">Nenhum item encontrado com esses filtros.</p>';
+          dealsGrid.innerHTML = '<p class="small">Nenhuma promoção encontrada para esse filtro. Tente remover alguma opção.</p>';
         }
       }
 
-      btnAdulto.addEventListener('click', () => {
-        localStorage.setItem('age_verified', 'true');
-        ageGate.classList.add('hidden');
-      });
-
-      btnMenor.addEventListener('click', () => {
-        window.location.href = 'https://www.google.com';
-      });
-
-      searchInput.addEventListener('input', renderCatalog);
-      genreFilter.addEventListener('change', renderCatalog);
-
-      if (localStorage.getItem('age_verified') === 'true') {
-        ageGate.classList.add('hidden');
+      function renderTopSellers() {
+        topGrid.innerHTML = topSellers.map((item) => buildCard(item, true)).join('');
       }
 
-      renderCatalog();
+      searchInput.addEventListener('input', filterDeals);
+      platformFilter.addEventListener('change', filterDeals);
+      priceFilter.addEventListener('change', filterDeals);
+
+      filterDeals();
+      renderTopSellers();
     </script>
   </body>
 </html>
