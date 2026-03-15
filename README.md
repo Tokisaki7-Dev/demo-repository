@@ -28,3 +28,28 @@ python3 -m http.server 4173
 ```
 
 Acesse `http://localhost:4173` no navegador.
+
+
+## Deploy no Vercel
+
+Este projeto já está pronto para deploy estático no Vercel (`vercel.json` incluído).
+
+### Opção 1 (recomendada): importar repositório no painel Vercel
+
+1. Acesse https://vercel.com/new
+2. Faça **Import Git Repository** deste repositório.
+3. Framework Preset: **Other**.
+4. Build Command: deixe vazio.
+5. Output Directory: deixe vazio (raiz com `index.html`).
+6. Clique em **Deploy**.
+
+Após isso, o Vercel gera uma URL pública no formato `https://<projeto>.vercel.app`.
+
+### Opção 2: CLI Vercel
+
+```bash
+npm i -g vercel
+vercel --prod
+```
+
+> Se sua rede bloquear o registro npm ou faltar autenticação, use a Opção 1 pelo painel.
