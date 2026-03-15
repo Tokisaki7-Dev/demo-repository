@@ -3,298 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OtakuVerse • Plataforma de Conteúdo +18 (modelo)</title>
-    <style>
-      :root {
-        --bg: #0f1220;
-        --panel: #1a1f35;
-        --panel-2: #232a46;
-        --text: #eef2ff;
-        --muted: #b9c0dd;
-        --accent: #7c5cff;
-        --accent-2: #40d3ff;
-        --danger: #ff5b7a;
-      }
-
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
-        background: radial-gradient(circle at top right, #2b2f57 0%, var(--bg) 45%);
-        color: var(--text);
-      }
-
-      a { color: var(--accent-2); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-
-      .container { width: min(1100px, 92vw); margin: 0 auto; }
-      .hidden { display: none !important; }
-
-      .age-gate {
-        position: fixed;
-        inset: 0;
-        background: rgba(8, 10, 18, 0.92);
-        display: grid;
-        place-items: center;
-        z-index: 999;
-        padding: 1rem;
-      }
-
-      .age-card {
-        max-width: 560px;
-        width: 100%;
-        background: linear-gradient(180deg, var(--panel), #141a31);
-        border: 1px solid #3e497a;
-        border-radius: 16px;
-        padding: 1.2rem;
-        box-shadow: 0 20px 40px rgba(0,0,0,.45);
-      }
-
-      .age-card h2 { margin-top: 0; }
-      .small { color: var(--muted); font-size: .92rem; line-height: 1.5; }
-      .actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
-
-      button, .btn {
-        background: var(--accent);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: .65rem 1rem;
-        font-weight: 600;
-        cursor: pointer;
-      }
-
-      button.secondary, .btn.secondary { background: #3a456f; }
-      button.danger { background: var(--danger); }
-
-      header {
-        border-bottom: 1px solid #35406c;
-        backdrop-filter: blur(8px);
-        position: sticky;
-        top: 0;
-        background: rgba(15, 18, 32, 0.84);
-      }
-
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        padding: .9rem 0;
-      }
-
-      .logo { font-weight: 800; letter-spacing: .4px; }
-      .logo span { color: var(--accent-2); }
-      .menu { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-      .hero {
-        padding: 3rem 0 1.5rem;
-        display: grid;
-        grid-template-columns: 1.25fr .75fr;
-        gap: 1.2rem;
-      }
-
-      .card {
-        background: linear-gradient(180deg, var(--panel), var(--panel-2));
-        border: 1px solid #3e497a;
-        border-radius: 14px;
-        padding: 1rem;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: .9rem;
-        margin: 1rem 0 2rem;
-      }
-
-      .item h4 { margin: .2rem 0 .3rem; }
-      .tag {
-        display: inline-block;
-        border: 1px solid #5d6999;
-        color: #dbe2ff;
-        border-radius: 999px;
-        padding: .2rem .6rem;
-        font-size: .8rem;
-        margin-right: .35rem;
-      }
-
-      .search-row { display: flex; gap: .6rem; flex-wrap: wrap; }
-      input, select {
-        width: 100%;
-        padding: .6rem .75rem;
-        border-radius: 10px;
-        border: 1px solid #4a5687;
-        background: #11172b;
-        color: var(--text);
-      }
-
-      .search-row > * { flex: 1; min-width: 180px; }
-
-      footer {
-        border-top: 1px solid #35406c;
-        color: var(--muted);
-        padding: 1rem 0 2.2rem;
-      }
-
-      @media (max-width: 840px) {
-        .hero { grid-template-columns: 1fr; }
-      }
-    </style>
+    <meta
+      name="description"
+      content="PromoRadar BR - agregador inteligente de promoções com monitoramento de preço, alertas e integração com múltiplas fontes."
+    />
+    <title>PromoRadar BR • Hub de Promoções Inteligente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="ageGate" class="age-gate">
-      <div class="age-card">
-        <h2>Verificação de Idade (18+)</h2>
-        <p class="small">
-          Este é um modelo técnico para plataforma com controle de acesso. Não há conteúdo explícito nesta demo.
-          Ao continuar, você confirma que é maior de 18 anos e aceita os <a href="#termos">Termos</a>.
-        </p>
-        <div class="actions">
-          <button id="btnAdulto">Tenho 18 anos ou mais</button>
-          <button id="btnMenor" class="danger">Sou menor de 18</button>
+    <header class="topbar">
+      <div class="container topbar-content">
+        <div>
+          <p class="eyebrow">Plataforma completa de ofertas</p>
+          <h1>PromoRadar <span>BR</span></h1>
+        </div>
+        <div class="topbar-actions">
+          <button id="refreshBtn" class="btn">Atualizar agora</button>
+          <button id="themeBtn" class="btn btn-secondary">Tema</button>
         </div>
       </div>
-    </div>
-
-    <header>
-      <nav class="container">
-        <div class="logo">Otaku<span>Verse</span></div>
-        <div class="menu">
-          <a href="#catalogo">Catálogo</a>
-          <a href="#planos">Planos</a>
-          <a href="#termos">Termos</a>
-          <a href="#privacidade">Privacidade</a>
-          <a href="#contato">Contato</a>
-        </div>
-      </nav>
     </header>
 
-    <main class="container">
-      <section class="hero">
-        <article class="card">
-          <h1>Template completo de site +18 (sem conteúdo explícito)</h1>
-          <p class="small">
-            Estrutura pronta com página inicial, verificação de idade, catálogo com filtros, planos, área legal e contato.
-            Ideal para evolução com backend, autenticação real e compliance.
-          </p>
-          <div class="actions">
-            <a class="btn" href="#catalogo">Explorar catálogo</a>
-            <a class="btn secondary" href="#planos">Ver planos</a>
-          </div>
-        </article>
-
-        <aside class="card" id="planos">
-          <h3>Planos</h3>
-          <p class="small">Exemplo de monetização:</p>
-          <ul>
-            <li>Free: acesso limitado</li>
-            <li>Plus: R$ 19,90/mês</li>
-            <li>Premium: R$ 39,90/mês (download offline)</li>
-          </ul>
-          <button class="secondary">Assinar (demo)</button>
-        </aside>
-      </section>
-
-      <section id="catalogo" class="card">
-        <h2>Catálogo</h2>
-        <div class="search-row">
-          <input id="searchInput" placeholder="Buscar por título..." />
-          <select id="genreFilter">
-            <option value="">Todos os gêneros</option>
-            <option value="Aventura">Aventura</option>
-            <option value="Romance">Romance</option>
-            <option value="Comédia">Comédia</option>
-            <option value="Fantasia">Fantasia</option>
-          </select>
+    <main class="container page-grid">
+      <section class="panel controls-panel">
+        <h2>Busca avançada</h2>
+        <div class="form-grid">
+          <label>
+            Produto / termo
+            <input id="queryInput" type="text" placeholder="Ex.: headset gamer" />
+          </label>
+          <label>
+            Categoria
+            <select id="categoryFilter">
+              <option value="">Todas</option>
+            </select>
+          </label>
+          <label>
+            Fonte
+            <select id="sourceFilter">
+              <option value="">Todas</option>
+              <option value="fakestore">FakeStore</option>
+              <option value="dummyjson">DummyJSON</option>
+              <option value="curated">Curadoria interna</option>
+            </select>
+          </label>
+          <label>
+            Preço máx. (R$)
+            <input id="maxPriceInput" type="number" min="0" step="1" placeholder="2000" />
+          </label>
+          <label>
+            Desconto mín. (%)
+            <input id="minDiscountInput" type="number" min="0" max="95" value="10" />
+          </label>
+          <label>
+            Ordenar
+            <select id="sortBy">
+              <option value="discount">Maior desconto</option>
+              <option value="price-asc">Menor preço</option>
+              <option value="price-desc">Maior preço</option>
+              <option value="rating">Melhor avaliação</option>
+            </select>
+          </label>
         </div>
-        <div id="catalogGrid" class="grid"></div>
+        <div class="panel-actions">
+          <button id="applyBtn" class="btn">Aplicar filtros</button>
+          <button id="clearBtn" class="btn btn-secondary">Limpar</button>
+          <label class="auto-refresh">
+            <input id="autoRefreshToggle" type="checkbox" />
+            Auto refresh (5 min)
+          </label>
+        </div>
       </section>
 
-      <section id="termos" class="card">
-        <h2>Termos de Uso</h2>
-        <p class="small">Template de seção legal: idade mínima, regras da comunidade, direitos autorais, política anti-pirataria e leis locais.</p>
+      <section class="panel analytics-panel">
+        <h2>Painel analítico</h2>
+        <div class="stats" id="stats"></div>
+        <canvas id="discountChart" width="640" height="180"></canvas>
       </section>
 
-      <section id="privacidade" class="card">
-        <h2>Política de Privacidade</h2>
-        <p class="small">Template de seção legal: tratamento de dados, cookies, base legal, retenção e canal de contato para solicitações LGPD/GDPR.</p>
-      </section>
-
-      <section id="contato" class="card">
-        <h2>Contato</h2>
-        <form class="search-row">
-          <input type="text" placeholder="Seu nome" required />
-          <input type="email" placeholder="Seu e-mail" required />
-          <button type="submit">Enviar</button>
+      <section class="panel alerts-panel">
+        <h2>Alertas personalizados</h2>
+        <form id="alertForm" class="alert-form">
+          <input id="alertKeyword" type="text" placeholder="Palavra-chave (ex.: RTX)" required />
+          <input id="alertTargetPrice" type="number" min="1" placeholder="Preço alvo" required />
+          <button class="btn" type="submit">Salvar alerta</button>
         </form>
+        <ul id="alertsList" class="alerts-list"></ul>
+      </section>
+
+      <section class="panel watchlist-panel">
+        <h2>Favoritos / Watchlist</h2>
+        <div id="watchlist" class="watchlist"></div>
+      </section>
+
+      <section class="panel products-panel">
+        <div class="products-header">
+          <h2>Ofertas encontradas</h2>
+          <p id="lastUpdated" class="muted"></p>
+        </div>
+        <div id="productsGrid" class="products-grid"></div>
       </section>
     </main>
 
-    <footer>
-      <div class="container">
-        © 2026 OtakuVerse (demo). Estrutura para uso educacional e adaptação legal.
-      </div>
-    </footer>
+    <template id="productCardTemplate">
+      <article class="product-card">
+        <img class="product-image" alt="Imagem do produto" loading="lazy" />
+        <div class="product-content">
+          <p class="source-tag"></p>
+          <h3 class="product-title"></h3>
+          <p class="product-category muted"></p>
+          <p class="product-description"></p>
+          <div class="price-box">
+            <p class="old-price"></p>
+            <p class="current-price"></p>
+            <p class="discount"></p>
+          </div>
+          <div class="rating-row"></div>
+          <div class="product-actions">
+            <a class="btn buy-link" target="_blank" rel="noopener noreferrer">Comprar</a>
+            <button class="btn btn-secondary fav-btn" type="button">Favoritar</button>
+          </div>
+        </div>
+      </article>
+    </template>
 
-    <script>
-      const ageGate = document.getElementById('ageGate');
-      const btnAdulto = document.getElementById('btnAdulto');
-      const btnMenor = document.getElementById('btnMenor');
-
-      const catalog = [
-        { title: 'Lendas de Asterion', genre: 'Fantasia', year: 2025 },
-        { title: 'Corredores de Neon', genre: 'Aventura', year: 2024 },
-        { title: 'Festival de Verão', genre: 'Romance', year: 2023 },
-        { title: 'Clube das Máscaras', genre: 'Comédia', year: 2022 },
-        { title: 'Nébula Escarlate', genre: 'Fantasia', year: 2026 },
-      ];
-
-      const grid = document.getElementById('catalogGrid');
-      const searchInput = document.getElementById('searchInput');
-      const genreFilter = document.getElementById('genreFilter');
-
-      function renderCatalog() {
-        const term = searchInput.value.toLowerCase().trim();
-        const genre = genreFilter.value;
-
-        const filtered = catalog.filter((item) => {
-          const byTitle = item.title.toLowerCase().includes(term);
-          const byGenre = genre ? item.genre === genre : true;
-          return byTitle && byGenre;
-        });
-
-        grid.innerHTML = filtered.map((item) => `
-          <article class="card item">
-            <span class="tag">${item.genre}</span>
-            <span class="tag">${item.year}</span>
-            <h4>${item.title}</h4>
-            <p class="small">Descrição genérica de item para demonstração de catálogo.</p>
-          </article>
-        `).join('');
-
-        if (!filtered.length) {
-          grid.innerHTML = '<p class="small">Nenhum item encontrado com esses filtros.</p>';
-        }
-      }
-
-      btnAdulto.addEventListener('click', () => {
-        localStorage.setItem('age_verified', 'true');
-        ageGate.classList.add('hidden');
-      });
-
-      btnMenor.addEventListener('click', () => {
-        window.location.href = 'https://www.google.com';
-      });
-
-      searchInput.addEventListener('input', renderCatalog);
-      genreFilter.addEventListener('change', renderCatalog);
-
-      if (localStorage.getItem('age_verified') === 'true') {
-        ageGate.classList.add('hidden');
-      }
-
-      renderCatalog();
-    </script>
+    <script src="app.js" defer></script>
   </body>
 </html>
