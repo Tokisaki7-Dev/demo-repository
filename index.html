@@ -14,6 +14,7 @@
         --accent: #7c5cff;
         --accent-2: #40d3ff;
         --danger: #ff5b7a;
+        --success: #22c55e;
       }
 
       * { box-sizing: border-box; }
@@ -131,6 +132,58 @@
 
       .search-row > * { flex: 1; min-width: 180px; }
 
+      .promo-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .6rem;
+        flex-wrap: wrap;
+      }
+
+      .status {
+        color: var(--muted);
+        font-size: .85rem;
+      }
+
+      .status.ok {
+        color: var(--success);
+      }
+
+      .promo-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #4a5687;
+      }
+
+      .price-row {
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        margin: .45rem 0;
+      }
+
+      .old-price {
+        text-decoration: line-through;
+        color: var(--muted);
+      }
+
+      .new-price {
+        color: var(--success);
+        font-weight: 700;
+      }
+
+      .coupon {
+        background: rgba(64, 211, 255, .15);
+        border: 1px dashed var(--accent-2);
+        border-radius: 8px;
+        padding: .35rem .5rem;
+        margin-top: .4rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: .85rem;
+      }
+
       footer {
         border-top: 1px solid #35406c;
         color: var(--muted);
@@ -162,6 +215,7 @@
         <div class="logo">Otaku<span>Verse</span></div>
         <div class="menu">
           <a href="#catalogo">Catálogo</a>
+          <a href="#promocoes">Promoções</a>
           <a href="#planos">Planos</a>
           <a href="#termos">Termos</a>
           <a href="#privacidade">Privacidade</a>
@@ -176,11 +230,11 @@
           <h1>Template completo de site +18 (sem conteúdo explícito)</h1>
           <p class="small">
             Estrutura pronta com página inicial, verificação de idade, catálogo com filtros, planos, área legal e contato.
-            Ideal para evolução com backend, autenticação real e compliance.
+            Agora com sincronização em tempo real de promoções via APIs públicas da internet.
           </p>
           <div class="actions">
             <a class="btn" href="#catalogo">Explorar catálogo</a>
-            <a class="btn secondary" href="#planos">Ver planos</a>
+            <a class="btn secondary" href="#promocoes">Ver promoções ao vivo</a>
           </div>
         </article>
 
@@ -194,6 +248,20 @@
           </ul>
           <button class="secondary">Assinar (demo)</button>
         </aside>
+      </section>
+
+      <section id="promocoes" class="card">
+        <div class="promo-head">
+          <h2>Promoções em tempo real</h2>
+          <div class="actions" style="margin-top:0;">
+            <button id="syncButton" class="secondary">Sincronizar agora</button>
+          </div>
+        </div>
+        <p class="small">
+          Os dados abaixo são sincronizados automaticamente com sites públicos (DummyJSON e Fake Store API) a cada 60 segundos.
+        </p>
+        <p id="syncStatus" class="status">Aguardando primeira sincronização...</p>
+        <div id="promoGrid" class="grid"></div>
       </section>
 
       <section id="catalogo" class="card">
@@ -223,11 +291,12 @@
 
       <section id="contato" class="card">
         <h2>Contato</h2>
-        <form class="search-row">
+        <form id="contactForm" class="search-row">
           <input type="text" placeholder="Seu nome" required />
           <input type="email" placeholder="Seu e-mail" required />
           <button type="submit">Enviar</button>
         </form>
+        <p id="contactFeedback" class="small hidden">Mensagem enviada com sucesso! Retornaremos em breve.</p>
       </section>
     </main>
 
@@ -254,6 +323,14 @@
       const searchInput = document.getElementById('searchInput');
       const genreFilter = document.getElementById('genreFilter');
 
+      const promoGrid = document.getElementById('promoGrid');
+      const syncStatus = document.getElementById('syncStatus');
+      const syncButton = document.getElementById('syncButton');
+      const contactForm = document.getElementById('contactForm');
+      const contactFeedback = document.getElementById('contactFeedback');
+
+      const PROMO_REFRESH_MS = 60000;
+
       function renderCatalog() {
         const term = searchInput.value.toLowerCase().trim();
         const genre = genreFilter.value;
@@ -278,6 +355,91 @@
         }
       }
 
+      function promoFromProduct(product, sourceName, index) {
+        const discountPercent = Math.min(60, 8 + (index % 8) * 6);
+        const original = Number(product.price || 0);
+        const discounted = Math.max(1, original * (1 - discountPercent / 100));
+        const codeBase = product.title.replace(/[^a-z0-9]/gi, '').slice(0, 6).toUpperCase() || 'OTAKU';
+
+        return {
+          sourceName,
+          title: product.title,
+          image: product.thumbnail || product.image || 'https://placehold.co/600x400?text=Produto',
+          discountPercent,
+          oldPrice: original,
+          newPrice: discounted,
+          coupon: `${codeBase}${discountPercent}`,
+        };
+      }
+
+      async function safeFetchJson(url) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 7000);
+
+        try {
+          const response = await fetch(url, { signal: controller.signal });
+          if (!response.ok) {
+            throw new Error(`Erro ao buscar: ${response.status}`);
+          }
+          return await response.json();
+        } finally {
+          clearTimeout(timeoutId);
+        }
+      }
+
+      function renderPromotions(promotions) {
+        if (!promotions.length) {
+          promoGrid.innerHTML = '<p class="small">Nenhuma promoção disponível no momento.</p>';
+          return;
+        }
+
+        promoGrid.innerHTML = promotions.map((promo) => `
+          <article class="card item promo-card">
+            <img src="${promo.image}" alt="${promo.title}" loading="lazy" />
+            <p class="small" style="margin:.5rem 0 0;">Fonte: ${promo.sourceName}</p>
+            <h4>${promo.title}</h4>
+            <p class="tag">Promoção: ${promo.discountPercent}% OFF</p>
+            <div class="price-row">
+              <span class="old-price">R$ ${promo.oldPrice.toFixed(2)}</span>
+              <span class="new-price">R$ ${promo.newPrice.toFixed(2)}</span>
+            </div>
+            <div class="coupon">Cupom: ${promo.coupon}</div>
+          </article>
+        `).join('');
+      }
+
+      async function syncPromotions() {
+        syncButton.disabled = true;
+        syncStatus.textContent = 'Sincronizando promoções com sites externos...';
+        syncStatus.classList.remove('ok');
+
+        try {
+          const [dummyData, fakeStoreData] = await Promise.all([
+            safeFetchJson('https://dummyjson.com/products?limit=6'),
+            safeFetchJson('https://fakestoreapi.com/products?limit=6'),
+          ]);
+
+          const fromDummy = (dummyData.products || []).map((product, idx) =>
+            promoFromProduct(product, 'DummyJSON', idx)
+          );
+          const fromFakeStore = (fakeStoreData || []).map((product, idx) =>
+            promoFromProduct(product, 'Fake Store API', idx + fromDummy.length)
+          );
+
+          const promotions = [...fromDummy, ...fromFakeStore].slice(0, 12);
+          renderPromotions(promotions);
+
+          const now = new Date().toLocaleTimeString('pt-BR');
+          syncStatus.textContent = `Última sincronização: ${now} (${promotions.length} promoções carregadas)`;
+          syncStatus.classList.add('ok');
+        } catch (error) {
+          renderPromotions([]);
+          syncStatus.textContent = `Falha ao sincronizar promoções: ${error.message}`;
+        } finally {
+          syncButton.disabled = false;
+        }
+      }
+
       btnAdulto.addEventListener('click', () => {
         localStorage.setItem('age_verified', 'true');
         ageGate.classList.add('hidden');
@@ -289,12 +451,21 @@
 
       searchInput.addEventListener('input', renderCatalog);
       genreFilter.addEventListener('change', renderCatalog);
+      syncButton.addEventListener('click', syncPromotions);
+
+      contactForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        contactFeedback.classList.remove('hidden');
+        contactForm.reset();
+      });
 
       if (localStorage.getItem('age_verified') === 'true') {
         ageGate.classList.add('hidden');
       }
 
       renderCatalog();
+      syncPromotions();
+      setInterval(syncPromotions, PROMO_REFRESH_MS);
     </script>
   </body>
 </html>
