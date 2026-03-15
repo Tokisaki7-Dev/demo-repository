@@ -1,55 +1,41 @@
-# Demo repository (site estático)
+# PromoRadar BR (site estático)
 
-Este repositório publica o `index.html` automaticamente no **GitHub Pages** via GitHub Actions.
+Hub de promoções com visual original, agregação de ofertas em múltiplas fontes, watchlist e alertas locais.
 
-## Publicação automática
+## Funcionalidades
 
-1. Faça push para a branch principal do repositório.
-2. No GitHub, abra **Settings → Pages** e em **Build and deployment** selecione **GitHub Actions** (uma única vez).
-3. O workflow **Deploy static site to GitHub Pages** fará o deploy automático.
+- Busca e filtros avançados (categoria, fonte, preço máximo, desconto mínimo e ordenação).
+- Agregação automática de produtos de:
+  - FakeStore API
+  - DummyJSON API
+  - Curadoria interna de ofertas
+- Cartões com imagem, desconto calculado, preço atual, preço anterior e link de compra.
+- Painel analítico com estatísticas e gráfico de desconto.
+- Alertas personalizados por palavra-chave e preço alvo (com Notification API do navegador).
+- Watchlist local persistida em `localStorage`.
+- Tema claro/escuro.
+- Atualização manual e automática (a cada 5 minutos).
 
-## URL pública
-
-Depois do deploy, a URL normalmente fica neste formato:
-
-`https://<seu-usuario>.github.io/<nome-do-repositorio>/`
-
-## Como pegar o link publicado
-
-- Vá em **Actions** → workflow **Deploy static site to GitHub Pages**.
-- Abra a execução mais recente e veja o log do passo **Show deployed URL**.
-- O link também aparece em **Settings → Pages** depois do primeiro deploy.
-
-
-## Desenvolvimento local
+## Rodar localmente
 
 ```bash
 python3 -m http.server 4173
 ```
 
-Acesse `http://localhost:4173` no navegador.
-
+Acesse `http://localhost:4173`.
 
 ## Deploy no Vercel
 
-Este projeto já está pronto para deploy estático no Vercel (`vercel.json` incluído).
-
-### Opção 1 (recomendada): importar repositório no painel Vercel
+Este projeto já está pronto para deploy estático no Vercel (`vercel.json`).
 
 1. Acesse https://vercel.com/new
-2. Faça **Import Git Repository** deste repositório.
-3. Framework Preset: **Other**.
-4. Build Command: deixe vazio.
-5. Output Directory: deixe vazio (raiz com `index.html`).
-6. Clique em **Deploy**.
+2. Importe o repositório
+3. Framework Preset: **Other**
+4. Build Command: vazio
+5. Output Directory: vazio
+6. Deploy
 
-Após isso, o Vercel gera uma URL pública no formato `https://<projeto>.vercel.app`.
+## Observações
 
-### Opção 2: CLI Vercel
-
-```bash
-npm i -g vercel
-vercel --prod
-```
-
-> Se sua rede bloquear o registro npm ou faltar autenticação, use a Opção 1 pelo painel.
+- Algumas integrações públicas podem ter variação de disponibilidade conforme CORS e limites das APIs.
+- Este projeto é front-end estático; para produção comercial em larga escala, recomenda-se adicionar backend próprio para normalização de feeds e monitoramento robusto.
